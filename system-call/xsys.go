@@ -10,6 +10,8 @@ func main() {
 	Getwd()
 
 	Getuid()
+
+	Environ()
 }
 
 func Getwd() {
@@ -23,4 +25,11 @@ func Getwd() {
 func Getuid() {
 	uid := unix.Getuid()
 	fmt.Printf("uid=%d\n", uid)
+}
+
+func Environ() {
+	envs := unix.Environ()
+	for _, e := range envs {
+		fmt.Printf("%s\n", e)
+	}
 }
