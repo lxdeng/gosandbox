@@ -40,12 +40,7 @@ func parent() {
 }
 
 func child() {
-	//must(os.MkdirAll("rootfs/oldrootfs", 0700))
-	//must(syscall.Mount("rootfs", "rootfs", "", syscall.MS_BIND, ""))
-	//must(syscall.PivotRoot("rootfs", "rootfs/oldrootfs"))
-	//must(os.Chdir("/"))
-
-	fmt.Println("starting child: ....")
+	fmt.Println("enter child: ....")
 	//cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd := exec.Command("/proc/self/exe", append([]string{"grandchild"}, os.Args[2:]...)...)
 	cmd.Stdin = os.Stdin
@@ -61,7 +56,7 @@ func child() {
 }
 
 func grandchild() {
-	fmt.Println("starting grandchild: ....")
+	fmt.Println("enter grandchild: ....")
 	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
