@@ -52,6 +52,8 @@ func child() {
 
 	walkDir("/oldrootfs/tmp")
 
+	ls()
+
 	/*
 		cmd := exec.Command(os.Args[2], os.Args[3:]...)
 		cmd.Stdin = os.Stdin
@@ -71,6 +73,34 @@ func must(err error) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func ls() {
+	path, err := exec.LookPath("/oldrootfs/bin/ls")
+	if err != nil {
+		log.Fatal("ls command not found")
+	}
+
+	fmt.Printf("ls is available at %s\n", path)
+
+	must(os.Chdir("/oldrootfs/bin"))
+
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatal("os.Getwd failed: ", err)
+	}
+	fmt.Printf("cwd=%s\n", cwd)
+
+	cmd := exec.Command(path)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	if err := cmd.Run(); err != nil {
+		fmt.Println("ERROR", err) // why cmd.Run() cannot find the executable ls?
+		os.Exit(1)
+	}
+
 }
 
 func walkDir(dir string) {
