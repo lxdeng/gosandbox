@@ -12,9 +12,10 @@ func main() {
 		version = flag.String("version", "1.0", "version string")
 	)
 
-	level := ""
-	logLevel := &level
-	flag.StringVar(logLevel, "logLevel", "info", "log level")
+	//level := ""
+	//logLevel := &level
+	logLevel := new(string) // the pointed string has default string zero value ""
+	fmt.Printf("logLevel has value %v\n", *logLevel)
 
 	flag.Parse()
 
