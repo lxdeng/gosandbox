@@ -5,8 +5,10 @@ import (
 )
 
 func main() {
-	m := make(map[string]int, 10)
+	m := make(map[string]int, 10) // initial size
 	fmt.Println("m.len=", len(m))
+	// cap() is not allowed
+	//fmt.Println("m.cap=", cap(m))
 	fmt.Printf("%T\n", m)
 
 	m["k1"] = 1

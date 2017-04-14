@@ -44,16 +44,31 @@ func testAppend2() {
 		a[i] = i
 	}
 
+	fmt.Println("before calling Test on the slice:", a)
+
 	Test(a)
+
+	fmt.Println("after calling Test on the slice:", a)
+
 	fmt.Println(a)
+
+	TestPointer(&a)
+	fmt.Println("after calling TestPointer on the slice:", a)
 	fmt.Println()
 }
 
+// slice is a reference to array, efficient for passing
 func Test(slice []int) {
 	fmt.Printf("cap(the slice)=%d\n", cap(slice))
 	slice = append(slice, 100)
-	fmt.Println(slice)
-	fmt.Printf("cap(the new slice)=%d\n", cap(slice))
+
+	fmt.Println("inside Test:", slice)
+	fmt.Printf("cap(the slice)=%d\n", cap(slice))
+}
+
+// using pointer to change the slice(the reference itself)
+func TestPointer(pslice *[]int) {
+	*pslice = append(*pslice, 101)
 }
 
 // As a special case, it is legal to append a string to a byte slice
@@ -70,12 +85,14 @@ func testNilSlice() {
 	nilSlice := []int(nil)
 	//var nilSlice []int
 	fmt.Printf("cap(nilSlice)=%d,  len(nilSlice)=%d\n", cap(nilSlice), len(nilSlice))
+	nilSlice = append(nilSlice, 99)
+	fmt.Printf("aftern append nil slice: cap(nilSlice)=%d,  len(nilSlice)=%d\n", cap(nilSlice), len(nilSlice))
 
 	//emptySlice := []int{}
 	emptySlice := make([]int, 0)
 	fmt.Printf("cap(emptySlice)=%d,  len(emptySlice)=%d\n", cap(emptySlice), len(emptySlice))
 
 	emptySlice = append(emptySlice, 1)
-	fmt.Printf("emptySlice=%v, empty slice can grow, but not nil slice", emptySlice)
+	fmt.Printf("emptySlice=%v, empty slice can grow, nil slice can grow also", emptySlice)
 	fmt.Println()
 }
