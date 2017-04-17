@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"sync"
 )
 
 func main() {
@@ -23,9 +24,25 @@ func main() {
     `))
 	})
 
+	http.HandleFunc("/count", handler)
+
 	fmt.Println("ListenAndServe: 8080")
 	// start the web server
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
+}
+
+var mu sync.Mutex
+var count int64
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	var c int64
+
+	mu.Lock()
+	count++
+	c = count
+	mu.Unlock()
+
+	fmt.Fprintf(w, "URL.Path=%q counter=%d\n", r.URL.Path, c)
 }

@@ -17,9 +17,14 @@ func main() {
 	fmt.Println("map: ", m)
 
 	delete(m, "k1")
-	fmt.Println("map: ", m)
+	fmt.Println("After deletted k1, map: ", m)
 
 	if val, ok := m["k2"]; ok {
-		fmt.Printf("key key exists, value is %d\n", val)
+		fmt.Printf("key %s exists, value is %d\n\n", "k2", val)
+	}
+
+	m["k3"] = 3
+	for k, v := range m {
+		fmt.Printf("key=%s, value=%d\n", k, v)
 	}
 }

@@ -34,7 +34,7 @@ func readAll() {
 
 func copyToStdOut() {
 	log.Println("copyToStdOut:")
-	url := "//localhost:8080"
+	url := "//localhost:8080/count"
 	if !strings.HasPrefix(url, "http:") {
 		url = "http:" + url
 	}
