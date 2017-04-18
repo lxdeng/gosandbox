@@ -20,8 +20,8 @@ func counter(start int) (func() int, func()) {
 func test2() {
 	ctr, incr := counter(100) // All closures created together have same state.
 
-    // the state are different for different creations of a closure
-    // ctr1, incr1 are different from ctr, incr
+	// the state are different for different creations of a closure
+	// ctr1, incr1 are different from ctr, incr
 	ctr1, incr1 := counter(100)
 
 	fmt.Println("counter - ", ctr())
