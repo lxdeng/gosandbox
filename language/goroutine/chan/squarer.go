@@ -11,22 +11,31 @@ func main() {
 
 	// Counter
 	go func() {
-		for i := 0; ; i++ {
+		for i := 0; i < 10; i++ {
 			naturals <- i
-			time.Sleep(3 * time.Second)
+			time.Sleep(1 * time.Second)
 		}
+		// closing a channel to tell receiving end
+		close(naturals)
 	}()
 
 	// Squarer
 	go func() {
-		for {
-			i := <-naturals
+		//
+		// receive on a closed channel gets a zero value, if not using range
+		// x, ok := <-naturals get ok==false, if channel closed
+		//
+		for i := range naturals {
 			squares <- i * i
 		}
+		close(squares)
+
 	}()
 
 	// Printer (in main goroutine)
-	for {
-		fmt.Println(<-squares)
+	for i := range squares {
+		fmt.Println(i)
 	}
+
+	fmt.Println("drained all")
 }
