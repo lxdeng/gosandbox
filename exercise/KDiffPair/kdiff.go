@@ -20,6 +20,10 @@ func main() {
 }
 
 func findPairs(nums []int, k int) int {
+	if k < 0 { // absolute diff should >=0
+		return 0
+	}
+
 	set := make(map[int]bool)
 
 	count := 0
@@ -27,9 +31,12 @@ func findPairs(nums []int, k int) int {
 	for i := 0; i < len(nums)-1; i++ {
 		for j := i + 1; j < len(nums); j++ {
 			if (nums[i]-nums[j] == k) || (nums[j]-nums[i] == k) {
-				if !(set[nums[i]] && set[nums[j]]) {
-					set[nums[i]] = true
-					set[nums[j]] = true
+				t := nums[i]
+				if nums[i] > nums[j] {
+					t = nums[j]
+				}
+				if !(set[t]) {
+					set[t] = true
 					count++
 					fmt.Printf("%d, %d\n", nums[i], nums[j])
 				}
