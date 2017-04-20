@@ -12,7 +12,10 @@ func main() {
 	// Counter
 	go func() {
 		for i := 0; i < 10; i++ {
-			naturals <- i
+			// uni-directional channel
+			var naturals2 chan<- int
+			naturals2 = naturals
+			naturals2 <- i
 			time.Sleep(1 * time.Second)
 		}
 		// closing a channel to tell receiving end
