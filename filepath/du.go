@@ -15,8 +15,13 @@ var sema = make(chan struct{}, 20)
 
 // dirents returns the entries of directory dir, sorted by name
 func dirents(dir string) []os.FileInfo {
-	sema <- struct{}{}        // acquire token
-    defer func() { <-sema }() // release token
+	select {
+	case sema <- struct{}{}: // acquire token
+	case <-done:
+		return nil // cancelled
+	}
+
+	defer func() { <-sema }() // release token
 
 	entries, err := ioutil.ReadDir(dir)
 	if err != nil {
@@ -31,6 +36,10 @@ func dirents(dir string) []os.FileInfo {
 func walkDir(dir string, fileSizes chan<- int64, n *sync.WaitGroup) {
 	defer n.Done()
 
+	if cancelled() {
+		return
+	}
+
 	for _, entry := range dirents(dir) {
 		if entry.IsDir() {
 			//fileSizes <- entry.Size() //ignore directories
@@ -44,6 +53,17 @@ func walkDir(dir string, fileSizes chan<- int64, n *sync.WaitGroup) {
 }
 
 var verbose = flag.Bool("v", false, "show verbose progress messages")
+
+var done = make(chan struct{})
+
+func cancelled() bool {
+	select {
+	case <-done:
+		return true
+	default:
+		return false
+	}
+}
 
 func main() {
 	flag.Parse()
@@ -60,6 +80,12 @@ func main() {
 		n.Add(1)
 		go walkDir(root, fSizes, &n)
 	}
+
+	go func() {
+		os.Stdin.Read(make([]byte, 1))
+		close(done)
+		fmt.Println("cancel received")
+	}()
 
 	go func() {
 		n.Wait()
@@ -90,4 +116,6 @@ loop:
 	}
 
 	fmt.Printf("%d files,  %d bytes\n", nFiles, nBytes)
+
+	panic("really done?")
 }
