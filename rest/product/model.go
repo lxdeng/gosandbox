@@ -20,11 +20,35 @@ func (p *product) updateProduct(db *sql.DB) error {
 }
 
 func (p *product) deleteProduct(db *sql.DB) error {
-	return errors.New("Not implemented")
+	_, err := db.Exec("DELETE FROM products WHERE id=$1", p.ID)
+	return err
 }
 
 func (p *product) createProduct(db *sql.DB) error {
-	return errors.New("Not implemented")
+	/*
+		SQLite does not suport the DML Returning statement
+		err := db.QueryRow(
+			"INSERT INTO products(name, price) VALUES($1, $2) RETURNING id",
+			p.Name, p.Price).Scan(&p.ID)
+	*/
+
+	stmt, err := db.Prepare("INSERT INTO products(name, price) VALUES(?, ?)")
+	if err != nil {
+		return err
+	}
+
+	res, err := stmt.Exec(p.Name, p.Price)
+	if err != nil {
+		return err
+	}
+
+	if id, err := res.LastInsertId(); err != nil {
+		return err
+	} else {
+		p.ID = int(id)
+	}
+
+	return nil
 }
 
 func getProducts(db *sql.DB, start, count int) ([]product, error) {

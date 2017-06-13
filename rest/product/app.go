@@ -30,15 +30,51 @@ func (a *App) Initialize(dbname string) {
 
 func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/products", a.getProducts).Methods("GET")
-	/*
-	   a.Router.HandleFunc("/product", a.createProduct).Methods("POST")
-	   a.Router.HandleFunc("/product/{id:[0-9]+}", a.getProduct).Methods("GET")
-	   a.Router.HandleFunc("/product/{id:[0-9]+}", a.updateProduct).Methods("PUT")
-	   a.Router.HandleFunc("/product/{id:[0-9]+}", a.deleteProduct).Methods("DELETE")
-	*/
+	a.Router.HandleFunc("/product", a.createProduct).Methods("POST")
+	//   a.Router.HandleFunc("/product/{id:[0-9]+}", a.getProduct).Methods("GET")
+	//   a.Router.HandleFunc("/product/{id:[0-9]+}", a.updateProduct).Methods("PUT")
+	a.Router.HandleFunc("/product/{id:[0-9]+}", a.deleteProduct).Methods("DELETE")
 }
 
-func (a *App) Run(addr string) {}
+func (a *App) Run(addr string) {
+	if err := http.ListenAndServe(addr, a.Router); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func (a *App) createProduct(w http.ResponseWriter, r *http.Request) {
+	var p product
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&p); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	defer r.Body.Close()
+
+	if err := p.createProduct(a.DB); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusCreated, p)
+}
+
+func (a *App) deleteProduct(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid Product ID")
+		return
+	}
+
+	p := product{ID: id}
+	if err := p.deleteProduct(a.DB); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
+}
 
 func (a *App) getProducts(w http.ResponseWriter, r *http.Request) {
 	count, _ := strconv.Atoi(r.FormValue("count"))
