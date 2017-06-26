@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -10,7 +12,15 @@ import (
 
 var a App
 
+// If the test code contains a function
+// func TestMain(m *testing.M)
+// that function will be called instead of running the tests directly.
+// The M struct contains methods to access and run the tests.
+//
+// do global set-up/tear-down for tests
+//
 func TestMain(m *testing.M) {
+	fmt.Println("enter TestMain: do some setup")
 	a = App{}
 	a.Initialize("product.db")
 	//		os.Getenv("TEST_DB_NAME"))
@@ -19,12 +29,15 @@ func TestMain(m *testing.M) {
 
 	code := m.Run()
 
+	fmt.Println("to exit TestMain: clean up")
+
 	clearTable()
 
 	os.Exit(code)
 }
 
 func TestEmptyTable(t *testing.T) {
+	fmt.Println("enter TestEmptyTable")
 	clearTable()
 
 	req, _ := http.NewRequest("GET", "/products", nil)
@@ -35,6 +48,27 @@ func TestEmptyTable(t *testing.T) {
 	if body := response.Body.String(); body != "[]" {
 		t.Errorf("Expected an empty array. Got %s", body)
 	}
+}
+
+func TestGetNonExistentProduct(t *testing.T) {
+	fmt.Println("enter TestGetNonExistentProduct")
+
+	clearTable()
+
+	req, _ := http.NewRequest("GET", "/product/11", nil)
+	response := executeRequest(req)
+
+	checkResponseCode(t, http.StatusNotFound, response.Code)
+
+	var m map[string]string
+	json.Unmarshal(response.Body.Bytes(), &m)
+	if m["error"] != "Product not found" {
+		t.Errorf("Expected the 'error' key of the response to be set to 'Product not found'. Got '%s'", m["error"])
+	}
+}
+
+func TestDummy(t *testing.T) {
+	fmt.Println("enter TestDummy")
 }
 
 func executeRequest(req *http.Request) *httptest.ResponseRecorder {
