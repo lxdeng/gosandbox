@@ -6,11 +6,33 @@ import (
 	"io"
 )
 
+type User struct {
+	Name string
+}
+
 func main() {
+	u1 := User{"Tom"}
+	u2 := User{"Tom"}
+
+	// Struct values are comparable if all their fields are comparable.
+	// Two struct values are equal if their corresponding non-blank fields are equal.
+	if u1 == u2 {
+		fmt.Println("u1 == u2")
+	} else {
+		fmt.Println("u1 != u2")
+	}
+
+	//
+	// io.EOF is of type pointer
+	//
 	if _, err := f1(); err == io.EOF {
 		fmt.Println("got io.EOF")
+		fmt.Printf("%T\n", io.EOF)
+		fmt.Printf("%T\n", err)
 	} else {
 		fmt.Println("did not get io.EOF")
+		fmt.Printf("%T\n", io.EOF)
+		fmt.Printf("%T\n", err)
 	}
 
 	if _, err := f2(); err == io.EOF {
