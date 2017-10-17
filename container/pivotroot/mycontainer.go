@@ -17,7 +17,7 @@ func main() {
 	case "child":
 		child()
 	default:
-		panic("wat should I do")
+		panic("what should I do")
 	}
 }
 
@@ -76,7 +76,7 @@ func must(err error) {
 }
 
 func ls() {
-	path, err := exec.LookPath("/oldrootfs/bin/ls")
+	path, err := exec.LookPath("/ls")
 	if err != nil {
 		log.Fatal("ls command not found")
 	}

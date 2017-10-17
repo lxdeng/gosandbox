@@ -1,3 +1,7 @@
+https://www.infoq.com/articles/build-a-container-golang
+
+Run process in an isolated set of namespaces. But the filesystem looks the same as the host. This is because you’re in a mount namespace, but the initial mounts are inherited from the creating namespace.
+
 Default namespaces:
 
 root@Ubu1404:/proc/1/ns# ls -l
