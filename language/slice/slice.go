@@ -5,6 +5,8 @@ import (
 )
 
 func main() {
+	sliceAnArray()
+
 	testAppend()
 
 	// built-in append() may use the original underlying array to store the appended,
@@ -16,6 +18,20 @@ func main() {
 	testAppendStringToByteSlice()
 
 	testNilSlice()
+}
+
+func sliceAnArray() {
+	fmt.Println("sliceAnArray")
+	x := [6]int{1, 2, 3, 4, 5, 6}
+
+	// [low : high] high not included
+	s1 := x[1:4]
+	fmt.Println(s1)
+
+	// slice a slice
+	s2 := s1[0:1]
+	fmt.Println(s2)
+	fmt.Println()
 }
 
 func testAppendAnotherSlice() {
@@ -50,10 +66,13 @@ func testAppend2() {
 
 	fmt.Println("after calling Test on the slice:", a)
 
-	fmt.Println(a)
+	// though the underlying array expands, the original slice's cap is not changed
+	fmt.Printf("a's cap: %d\n", cap(a))
 
 	TestPointer(&a)
 	fmt.Println("after calling TestPointer on the slice:", a)
+	fmt.Printf("a's cap: %d\n", cap(a))
+
 	fmt.Println()
 }
 
