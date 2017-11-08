@@ -31,7 +31,12 @@ func sliceAnArray() {
 	// slice a slice
 	s2 := s1[0:1]
 	fmt.Println(s2)
-	fmt.Println()
+
+    // slice a slice, beyond the len(s1), to extends the slice, as long as it is not beyond cap(s1)
+    fmt.Printf("s1's cap = %d\n", cap(s1))
+    s3 := s1[0:4]
+    fmt.Println(s3)
+    fmt.Println()
 }
 
 func testAppendAnotherSlice() {
