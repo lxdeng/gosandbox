@@ -11,6 +11,9 @@ type User struct {
 }
 
 func main() {
+
+	testErrorChain()
+
 	u1 := User{"Tom"}
 	u2 := User{"Tom"}
 
@@ -49,4 +52,26 @@ func f1() (int, error) {
 
 func f2() (int, error) {
 	return 0, io.EOF
+}
+
+func testErrorChain() {
+	r, err := checkPage()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(r)
+	}
+}
+
+func checkPage() (int, error) {
+	_, err := checkParagraph()
+	if err != nil {
+        return 0, fmt.Errorf("page error: %v", err)
+	} else {
+        return 0, nil
+	}
+}
+
+func checkParagraph() (int, error) {
+	return 0, errors.New("paragraph error")
 }
