@@ -8,7 +8,7 @@ func main() {
 	p := Point{1, 1}
 	q := Point{2, 2}
 
-	// same type Point
+	// same type, Point
 	fmt.Println(p.Distance(q))
 
 	pp := &p
@@ -18,7 +18,7 @@ func main() {
 	p2 := Point2{1, 1}
 	q2 := Point2{2, 2}
 
-	// same type *Point
+	// same type, *Point2
 	fmt.Println((&p2).Distance(q2))
 
 	// compiler implicitly uses the address of the variable p2
