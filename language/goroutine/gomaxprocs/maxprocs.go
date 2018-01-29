@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 )
 
 /*
@@ -13,6 +14,9 @@ import (
 */
 
 func main() {
+	previous := runtime.GOMAXPROCS(4)
+	fmt.Printf("GOMAXPROCS=%d\n", previous)
+
 	for {
 		go fmt.Print("0")
 		fmt.Print("1")
