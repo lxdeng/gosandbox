@@ -30,7 +30,7 @@ func (a *App) Initialize(dbname string) {
 
 func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/products", a.getProducts).Methods("GET")
-	a.Router.HandleFunc("/product", a.createProduct).Methods("POST")
+	a.Router.HandleFunc("/products", a.createProduct).Methods("POST")
 	a.Router.HandleFunc("/products/{id:[0-9]+}", a.getProduct).Methods("GET")
 	a.Router.HandleFunc("/products/{id:[0-9]+}", a.updateProduct).Methods("PUT")
 	a.Router.HandleFunc("/products/{id:[0-9]+}", a.deleteProduct).Methods("DELETE")

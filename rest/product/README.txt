@@ -8,10 +8,10 @@ curl -H "Content-Type: application/json" -X POST -d '{"name":"desk","price":50.9
 curl -H "Content-Type: application/json" -X POST -d '{"name":"chair","price":20.99}' http://localhost:8080/product
 
 delete a product:
-curl -X DELETE http://localhost:8080/product/<id>
+curl -X DELETE http://localhost:8080/products/<id>
 
 get a product:
-curl http://localhost:8080/product/<id>
+curl http://localhost:8080/products/<id>
 
 update a product:
-curl -H "Content-Type: application/json" -X PUT -d '{"id": 3, "name":"desk","price":55.99}'  http://localhost:8080/product/3
+curl -H "Content-Type: application/json" -X PUT -d '{"id": 3, "name":"desk","price":55.99}'  http://localhost:8080/products/3
