@@ -25,5 +25,5 @@ func main() {
 	fmt.Println(p2.Distance(q2))
 
 	//the following does not compile, since compiler cannot take the address of the literal
-	//Point{1, 2}.Distance(q2)
+	//Point2{1, 2}.Distance(q2)
 }
