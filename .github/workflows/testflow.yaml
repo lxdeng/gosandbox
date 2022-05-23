@@ -1,0 +1,20 @@
+name: test workflow
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout HEAD
+      uses: actions/checkout@v3
+
+    - name:
+      id: author
+      run: echo "hi author"
