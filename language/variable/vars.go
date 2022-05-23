@@ -11,7 +11,7 @@ var g1 = 1
 //g2 := 1.0
 
 // constants are a var whose value (of certain type) cannot be changed
-const G = 1
+const G = "abc"
 
 func main() {
 	g2 := 1.0

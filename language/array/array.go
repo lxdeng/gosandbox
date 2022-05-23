@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func main() {
@@ -10,4 +11,11 @@ func main() {
 
 	s := b[:]
 	fmt.Printf("type of s is: %T, len of s is: %d\n", s, len(s))
+
+	x, y := 1, 2
+
+	if math.Abs(float64(x - y)) <= 3 {
+		fmt.Println("true")
+	}
+
 }

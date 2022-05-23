@@ -7,17 +7,17 @@ import (
 func main() {
 	sliceAnArray()
 
-	testAppend()
+	//testAppend()
 
 	// built-in append() may use the original underlying array to store the appended,
 	// or allocate a new underlying array, if the cap is not sufficient
-	testAppend2()
+	//testAppend2()
 
-	testAppendAnotherSlice()
+	//testAppendAnotherSlice()
 
-	testAppendStringToByteSlice()
+	//testAppendStringToByteSlice()
 
-	testNilSlice()
+	//testNilSlice()
 }
 
 func sliceAnArray() {
@@ -25,18 +25,19 @@ func sliceAnArray() {
 	x := [6]int{1, 2, 3, 4, 5, 6}
 
 	// [low : high] high not included
-	s1 := x[1:4]
+	s1 := x[3:4]
 	fmt.Println(s1)
+	fmt.Printf("s1's cap = %d\n", cap(s1))
 
 	// slice a slice
 	s2 := s1[0:1]
 	fmt.Println(s2)
 
-    // slice a slice, beyond the len(s1), to extends the slice, as long as it is not beyond cap(s1)
-    fmt.Printf("s1's cap = %d\n", cap(s1))
-    s3 := s1[0:4]
-    fmt.Println(s3)
-    fmt.Println()
+	// slice a slice, beyond the len(s1), to extends the slice, as long as it is not beyond cap(s1)
+	fmt.Printf("s1's cap = %d\n", cap(s1))
+	s3 := s1[0:4]
+	fmt.Println(s3)
+	fmt.Println()
 }
 
 func testAppendAnotherSlice() {
