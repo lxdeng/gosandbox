@@ -20,7 +20,7 @@ jobs:
         ref: master
         check-name: MockPush
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        wait-interval: 20
+        wait-interval: 10
 
     - name: list env vars
       run: |

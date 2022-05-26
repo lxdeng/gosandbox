@@ -27,6 +27,11 @@ jobs:
         echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
         echo $GITHUB_SHA
 
+    - name: mock push
+      run: |
+        sleep 30
+        echo "done pushing docker image"
+
     - name: output vars
       run: |
         echo "Branch: ${{ steps.vars.outputs.branch }}"
