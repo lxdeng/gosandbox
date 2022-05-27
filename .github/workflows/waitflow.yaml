@@ -21,6 +21,7 @@ jobs:
         check-name: MockPush
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         wait-interval: 10
+        allowed-conclusions: success
 
     - name: list env vars
       run: |
