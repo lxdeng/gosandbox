@@ -1,0 +1,19 @@
+name: main workflow
+
+on:
+  push:
+    branches: [master]
+
+  jobs:
+    build:
+      name: main
+      runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout HEAD
+      uses: actions/checkout@v3 
+
+    - name: dispatch async workflows
+      uses: ./.github/actions/workflow-dispatch
+      with:
+        target_images: "test1 test2"

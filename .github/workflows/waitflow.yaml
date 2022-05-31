@@ -14,14 +14,14 @@ jobs:
     - name: checkout HEAD
       uses: actions/checkout@v3
 
-    - name: Wait for MockPush to succeed
-      uses: lewagon/wait-on-check-action@v1.0.0
-      with:
-        ref: master
-        check-name: MockPush
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        wait-interval: 10
-        allowed-conclusions: success
+    #- name: Wait for MockPush to succeed
+    #  uses: lewagon/wait-on-check-action@v1.0.0
+    #  with:
+    #    ref: master
+    #    check-name: MockPush
+    #    repo-token: ${{ secrets.GITHUB_TOKEN }}
+    #    wait-interval: 10
+    #    allowed-conclusions: success
 
     - name: list env vars
       run: |

@@ -1,0 +1,26 @@
+name: Deploy Dispatcher
+description: Creates repository dispatch events to trigger docker images pushing
+
+inputs:
+  target_images:
+    description: a list of docker images
+    required: true
+
+runs:
+  using: "composite"
+  
+  steps:
+  - name: debug
+    shell: bash
+    run: | 
+      echo "Dispatcher"
+      echo ${{ inputs.target_images }}
+
+  - name: dispatch
+    shell: bash
+    run: |
+      curl \
+        -X POST \
+        -d "{\"event_type\":\"build-completed\"}" \
+        -H "Accept: application/vnd.github.v3+json" \
+        "https://api.github.com/repos/gosandbox/dispatches"
