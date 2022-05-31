@@ -4,10 +4,10 @@ on:
   push:
     branches: [master]
 
-  jobs:
-    build:
-      name: main
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    name: main
+    runs-on: ubuntu-latest
 
     steps:
     - name: checkout HEAD
