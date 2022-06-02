@@ -17,6 +17,10 @@ jobs:
         echo "test"
         echo "push target: \"${{ github.event.client_payload.push_target }}\""
 
+    - name: debug
+      run: |
+        echo "debug"
+
     - name: Create Events Dataflow Flex Template Json
       if: github.event.client_payload.push_target == '//events/dataflow:image.push'
       run: |
