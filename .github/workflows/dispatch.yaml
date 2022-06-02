@@ -4,11 +4,15 @@ on:
     types: [build-completed]
 
 jobs:
-  steps:
-  - name: checkout HEAD
-    uses: actions/checkout@v3
+  push-image:
+    name: push
+    runs-on: ubuntu-latest
 
-  - name: 
-   run: |
-     echo "test"
+    steps:
+    - name: checkout HEAD
+      uses: actions/checkout@v3
+
+    - name: push docker image
+      run: |
+        echo "test"
 
