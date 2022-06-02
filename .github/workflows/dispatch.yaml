@@ -26,6 +26,6 @@ jobs:
       run: |
         echo "$TEMPLATE_PATH_PREFIX-${{ github.event.client_payload.source_sha }}.json" 
         echo "$TEMPLATE_IMAGE:${{ github.event.client_payload.source_sha }}"
-       env:
-         TEMPLATE_IMAGE: "gcr.io/fintech-solutions/events/dataflow:"
-         TEMPLATE_PATH_PREFIX: "gs://dataflow-templates/flex-templates/events/dataflow/pubsub-streaming"
+      env:
+        TEMPLATE_IMAGE: "gcr.io/fintech-solutions/events/dataflow:"
+        TEMPLATE_PATH_PREFIX: "gs://dataflow-templates/flex-templates/events/dataflow/pubsub-streaming"
