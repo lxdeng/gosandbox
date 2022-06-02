@@ -22,9 +22,10 @@ runs:
   - name: dispatch
     shell: bash
     run: |
+      source_sha=${{ github.sha }}
       curl \
         -X POST \
-        -d "{\"event_type\":\"build-completed\",\"client_payload\":{\"push_target\": \"//events/dataflow\"}}" \
+        -d "{\"event_type\":\"build-completed\",\"client_payload\":{\"push_target\": \"//events/dataflow:image.push\", \"source_sha\": \"${source_sha}\"}}" \
         -H "Authorization: token ${{ inputs.token }}" \
         -H "Accept: application/vnd.github.v3+json" \
         "https://api.github.com/repos/lxdeng/gosandbox/dispatches"

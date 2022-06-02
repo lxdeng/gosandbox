@@ -16,3 +16,12 @@ jobs:
       run: |
         echo "test"
         echo "push target: \"${{ github.event.client_payload.push_target }}\""
+
+    - name: Create Events Dataflow Flex Template Json
+      if: github.event.client_payload.push_target == '//events/dataflow:image.push'
+      run: |
+        echo "$TEMPLATE_PATH_PREFIX-${{ github.event.client_payload.source_sha }}.json" 
+        echo "$TEMPLATE_IMAGE:${{ github.event.client_payload.source_sha }}"
+       env:
+         TEMPLATE_IMAGE: "gcr.io/fintech-solutions/events/dataflow:"
+         TEMPLATE_PATH_PREFIX: "gs://dataflow-templates/flex-templates/events/dataflow/pubsub-streaming"
