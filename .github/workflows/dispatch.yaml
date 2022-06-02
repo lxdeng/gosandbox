@@ -15,4 +15,4 @@ jobs:
     - name: push docker image
       run: |
         echo "test"
-
+        echo "push target: \"${{ github.event.client_payload.push_target }}\""
