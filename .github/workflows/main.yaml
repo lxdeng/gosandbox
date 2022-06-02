@@ -16,4 +16,5 @@ jobs:
     - name: dispatch async workflows
       uses: ./.github/actions/workflow-dispatch
       with:
+        token: ${{ secrets.TEST_TOKEN}}
         target_images: "test1 test2"

@@ -1,0 +1,14 @@
+name: Push Image
+on:
+  repository_dispatch:
+    types: [build-completed]
+
+jobs:
+  steps:
+  - name: checkout HEAD
+    uses: actions/checkout@v3
+
+  - name: 
+   run: |
+     echo "test"
+
