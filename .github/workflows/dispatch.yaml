@@ -43,7 +43,7 @@ jobs:
         username: _json_key
         password: ${{ secrets.GCP_JSON_KEY }}
 
-    - name: Create Events Dataflow Flex Template Json
+    - name: Pre Create Events Dataflow Flex Template Json
       if: github.event.client_payload.push_target == '//events/dataflow:image.push'
       run: |
         echo "$TEMPLATE_PATH_PREFIX-${{ github.event.client_payload.source_sha }}.json" 
@@ -51,3 +51,14 @@ jobs:
       env:
         TEMPLATE_IMAGE: "gcr.io/fintech-solutions/events/dataflow"
         TEMPLATE_PATH_PREFIX: "gs://dataflow-templates/flex-templates/events/dataflow/pubsub-streaming"
+
+    - name: Create Events Dataflow Flex Template Json
+      if: github.event.client_payload.push_target == '//events/dataflow:image.push'
+      run: |
+        gcloud dataflow flex-template build "$TEMPLATE_PATH_PREFIX-${{ github.event.client_payload.source_sha }}.json" \
+        --image "$TEMPLATE_IMAGE:${{ github.event.client_payload.source_sha }}" \
+        --sdk-language "PYTHON" \
+        --metadata-file "events/dataflow/metadata.json"
+      env:
+        TEMPLATE_IMAGE: "gcr.io/ldeng-d6886e29/events/dataflow"
+        TEMPLATE_PATH_PREFIX: "gs://ldeng-test1/flex-templates/events/dataflow/pubsub-streaming"

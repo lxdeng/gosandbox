@@ -22,7 +22,8 @@ runs:
   - name: dispatch
     shell: bash
     run: |
-      source_sha=${{ github.sha }}
+      #source_sha=${{ github.sha }}
+      source_sha="test"
       curl \
         -X POST \
         -d "{\"event_type\":\"build-completed\",\"client_payload\":{\"push_target\": \"//events/dataflow:image.push\", \"source_sha\": \"${source_sha}\"}}" \
