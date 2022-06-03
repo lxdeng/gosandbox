@@ -1,0 +1,46 @@
+{
+  "name": "pubsub-streaming",
+  "description": "ingest pubsub messages into BigQuery",
+  "parameters": [
+    {
+      "name": "subscription",
+      "label": "subscription",
+      "helpText": "pubsub subscription",
+      "regexes": [
+        "projects/.*/subscriptions/.*"
+      ]
+    },
+    {
+      "name": "bigquery_project",
+      "label": "BigQuery Project",
+      "helpText": "The Project for BigQuery",
+      "regexes": [
+        ".*"
+      ]
+    },
+    {
+      "name": "dataset_name",
+      "label": "BigQuery Dataset name",
+      "helpText": "BigQuery dataset name",
+      "regexes": [
+        ".*"
+      ]
+    },
+    {
+      "name": "table_name",
+      "label": "BigQuery table name",
+      "helpText": "BigQuery table name",
+      "regexes": [
+        ".*"
+      ]
+    },
+    {
+      "name": "github_sha",
+      "label": "Github commit sha",
+      "helpText": "Github commit sha",
+      "regexes": [
+        ".*"
+      ]
+    }
+  ]
+}
