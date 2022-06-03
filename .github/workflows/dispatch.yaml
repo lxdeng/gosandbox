@@ -17,9 +17,31 @@ jobs:
         echo "test"
         echo "push target: \"${{ github.event.client_payload.push_target }}\""
 
-    - name: debug
+    - id: gcloud-credentials
+      name: setup gcloud credentials
+      uses: 'google-github-actions/auth@v0'
+      with:
+        project_id: ldeng-d6886e29
+        credentials_json: ${{ secrets.GCP_JSON_KEY }}
+        create_credentials_file: true
+        cleanup_credentials: true
+
+    - name: setup gcloud sdk
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ldeng-d6886e29
+
+    - name: gcloud auth list
       run: |
-        echo "debug"
+        echo "$ gcloud auth list: "
+        gcloud auth list
+    
+    - name: login to gcr
+      uses: docker/login-action@v1
+      with:
+        registry: gcr.io
+        username: _json_key
+        password: ${{ secrets.GCP_JSON_KEY }}
 
     - name: Create Events Dataflow Flex Template Json
       if: github.event.client_payload.push_target == '//events/dataflow:image.push'
